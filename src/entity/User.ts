@@ -11,16 +11,16 @@ import { Role } from './Roles';
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id?: string;
 
   @Column({ nullable: true })
-  firstName: string;
+  firstName?: string;
 
   @Column({ nullable: true })
-  lastName: string;
+  lastName?: string;
 
   @Column({ nullable: true })
-  age: number;
+  age?: number;
 
   @Column({
     nullable: false,
@@ -29,7 +29,7 @@ export class User {
     default: [Role.User],
     select: false
   })
-  roles: Role[];
+  roles?: Role[];
 
   @Column({ nullable: false, unique: true })
   username: string;
