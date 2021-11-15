@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import * as express from 'express';
 import { config as envConfig } from 'dotenv';
 import { connectDb } from '@config/Db';
-// import { UserRoutes } from '@routes/UserRoutes';
+import { UserRoutes } from '@routes/UserRoutes';
 import { AuthRoutes } from '@routes/AuthRoutes';
 
 envConfig();
@@ -14,7 +14,7 @@ const main = async () => {
     const app = express();
     app.use(express.json());
     app.listen(process.env.SERVER_PORT);
-    // app.use('', UserRoutes());
+    app.use('', UserRoutes());
     app.use('', AuthRoutes());
     console.log(
       `Express server has started on port ${process.env.SERVER_PORT}`

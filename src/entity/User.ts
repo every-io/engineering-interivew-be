@@ -6,25 +6,35 @@ import {
   BeforeInsert,
 } from 'typeorm';
 import { hashSync } from 'bcrypt';
+import { Role } from './Roles';
 
 @Entity('users')
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @Column()
+  @Column({ nullable: true })
   firstName: string;
 
-  @Column()
+  @Column({ nullable: true })
   lastName: string;
 
-  @Column()
+  @Column({ nullable: true })
   age: number;
 
-  @Column({ nullable: false })
+  @Column({
+    nullable: false,
+    type: 'set',
+    enum: Role,
+    default: [Role.User],
+    select: false
+  })
+  roles: Role[];
+
+  @Column({ nullable: false, unique: true })
   username: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, select: false })
   password: string;
 
   @BeforeUpdate()

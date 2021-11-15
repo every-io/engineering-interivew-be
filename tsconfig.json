@@ -6,6 +6,7 @@
     "outDir": "build",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
@@ -13,7 +14,9 @@
       "@controller/*": ["src/controller/*"],
       "@entity/*": ["src/entity/*"],
       "@services/*": ["src/services/*"],
-      "@routes/*": ["src/routes/*"]
+      "@routes/*": ["src/routes/*"],
+      "@middlewares/*": ["src/middlewares/*"],
+      "@dto/*": ["src/dto/*"]
     }
   },
   "include": ["src/**/*.ts", "tests/**/*.ts"],
