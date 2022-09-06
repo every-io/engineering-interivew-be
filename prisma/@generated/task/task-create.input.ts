@@ -1,0 +1,26 @@
+import { Field } from '@nestjs/graphql';
+import { InputType } from '@nestjs/graphql';
+import { UserCreateNestedOneWithoutTasksInput } from '../user/user-create-nested-one-without-tasks.input';
+import { HideField } from '@nestjs/graphql';
+
+@InputType()
+export class TaskCreateInput {
+
+    @Field(() => String, {nullable:false})
+    name!: string;
+
+    @Field(() => String, {nullable:true})
+    description?: string;
+
+    @Field(() => Date, {nullable:true})
+    createdAt?: Date | string;
+
+    @Field(() => Date, {nullable:true})
+    updateAt?: Date | string;
+
+    @Field(() => String, {nullable:false})
+    status!: string;
+
+    @HideField()
+    user?: UserCreateNestedOneWithoutTasksInput;
+}

@@ -1,0 +1,17 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "moduleNameMapper": {
+    "^@prismaConfig/(.*)$": "<rootDir>/../prisma/$1",
+    "^@test/(.*)$": "<rootDir>/../test/$1",
+    "^@/(.*)$": "<rootDir>/../src/$1",
+    "^@auth/(.*)$": "<rootDir>/../src/auth/$1",
+    "^@task/(.*)$": "<rootDir>/../src/task/$1",
+    "^@user/(.*)$": "<rootDir>/../src/user/$1"
+  }
+}

@@ -1,0 +1,96 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Task {
+  id: ID!
+  name: String!
+  description: String
+  createdAt: DateTime!
+  updateAt: DateTime!
+  status: String!
+  userId: Int
+  user: User
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type UserCount {
+  tasks: Int!
+}
+
+type User {
+  id: ID!
+  email: String!
+  name: String!
+  isAdmin: Boolean
+  createdAt: DateTime!
+  updateAt: DateTime!
+  tasks: [Task!]
+  _count: UserCount!
+}
+
+type LoginResponseDTO {
+  access_token: String!
+  user: User!
+}
+
+type Query {
+  users: [User!]!
+  user(id: String!): User!
+  tasks: [Task!]!
+  task(id: Int!): Task!
+}
+
+type Mutation {
+  removeUser(id: String!): User!
+  updateUser(updateUserInput: UpdateUserDTO!): User!
+  createTask(createTaskInput: CreateTaskInput!): Task!
+  updateTask(updateTaskInput: UpdateTaskInput!): Task!
+  removeTask(id: Int!): Task!
+  login(loginRequestInput: LoginRequestDTO!): LoginResponseDTO!
+  signUp(createUserInput: CreateUserDTO!): User!
+}
+
+input UpdateUserDTO {
+  email: EmailAddress
+  password: String
+  name: String
+  isAdmin: Boolean
+  id: Int!
+}
+
+"""
+A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/.
+"""
+scalar EmailAddress @specifiedBy(url: "https://www.w3.org/Protocols/rfc822/")
+
+input CreateTaskInput {
+  name: String!
+  description: String
+  userId: Int
+  status: String = "To Do"
+}
+
+input UpdateTaskInput {
+  name: String
+  description: String
+  userId: Int
+  status: String = "To Do"
+  id: Int!
+}
+
+input LoginRequestDTO {
+  email: String!
+  password: String!
+}
+
+input CreateUserDTO {
+  email: EmailAddress!
+  password: String!
+  name: String!
+  isAdmin: Boolean
+}
