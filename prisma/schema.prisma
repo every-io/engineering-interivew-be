@@ -1,0 +1,108 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator nestgraphql{
+  provider                              = "node node_modules/prisma-nestjs-graphql"
+  output                                = "./@generated"
+  // fields_Validator_from = "class-validator"
+  // fields_Validator_input = true
+  // fields_Scalars_input = true
+  // fields_Scalars_from = "graphql-scalars"
+
+  // decorate_3_type = "ProfileUncheckedCreateNestedOneWithoutUserInput"
+  // decorate_3_field = "!(create)"
+  // decorate_3_name = "HideField"
+  // decorate_3_from = "@nestjs/graphql"
+  // decorate_3_arguments = "[]"
+  fields_NG_from = "@nestjs/graphql"
+  fields_NG_output = false
+  fields_NG_model = true
+
+  noAtomicOperations                    = false
+  combineScalarFilters                  = true
+  reExport                              = None
+  emitSingle                            = false
+  emitCompiled                          = false
+  purgeOutput                           = false
+  requireSingleFieldsInWhereUniqueInput = false
+  fields_Validator_from                 = "class-validator"
+  fields_Validator_input                = true
+  fields_Scalars_from                   = "graphql-scalars"
+  fields_Scalars_input                  = true
+  useInputType_WhereInput_ALL           = "WhereInput"
+  decorate_1_type                       = "Create@(One|Many)UserArgs"
+  decorate_1_field                      = data
+  decorate_1_name                       = ValidateNested
+  decorate_1_from                       = "class-validator"
+  decorate_1_arguments                  = "[]"
+  decorate_2_type                       = "Create@(One|Many)UserArgs"
+  decorate_2_field                      = data
+  decorate_2_from                       = "class-transformer"
+  decorate_2_arguments                  = "['() => {propertyType.0}']"
+  decorate_2_name                       = Type
+  decorate_2_namedImport                = true
+  decorate_3_type                       = "ProfileUncheckedCreateNestedOneWithoutUserInput"
+  decorate_3_field                      = "!(create)"
+  decorate_3_name                       = "HideField"
+  decorate_3_from                       = "@nestjs/graphql"
+  decorate_3_arguments                  = "[]"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User{
+  /// @HideField({ match: "*CreateInput*" })
+  id Int @id @default(autoincrement())
+
+  /// @FieldType('Scalars.GraphQLEmailAddress')
+  /// @NG.Directive('@key(fields: "email")')
+  email String @unique
+
+  /// @Validator.IsString()
+  /// @Validator.MinLength(4)
+  /// @Validator.MaxLength(6)
+  /// @HideField({ output: true })
+  password String
+
+  ///@Validator.IsString()
+  name String
+
+  ///@Validator.IsBoolean()
+  isAdmin Boolean? @default(false) @map(name: "is_admin")
+
+  /// @HideField({ input:true })
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  /// @HideField({ input:true })
+  updateAt DateTime @updatedAt @map(name: "updated_at")
+
+
+  /// @HideField({ input:true })
+  tasks Task[]
+
+  @@map(name: "users")
+}
+
+model Task {
+  /// @HideField({ match: "*CreateInput*" })
+  id Int @id @default(autoincrement())
+  
+  name String @unique
+  description String?
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updateAt DateTime @updatedAt @map(name: "updated_at")
+  status String
+  
+  userId Int? @map("user_id")
+  /// @HideField({ input:true })
+  user User? @relation(fields: [userId], references: [id])
+
+
+  @@map(name: "tasks")
+}
