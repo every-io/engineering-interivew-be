@@ -1,0 +1,10 @@
+{
+  "verbose": true,
+  "watch": [
+    "src/",
+    ".env"
+  ],
+  "execMap": {
+    "ts": "node -r dotenv/config -r ts-node/register/transpile-only --inspect=${ATTACH_PORT:=9229}"
+  }
+}

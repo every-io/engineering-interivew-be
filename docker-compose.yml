@@ -1,0 +1,20 @@
+version: '3.5'
+
+services:
+  api:
+    build:
+      context: .
+      target: base
+      args:
+        - NPM_TOKEN=${NPM_TOKEN}
+    env_file:
+      - .env
+    environment:
+      - NPM_TOKEN
+    command: tail -f /dev/null
+    ports:
+      - '3000:3000' # open port for server api
+      - '9229:9229' # open port for inspector to debug
+    volumes:
+      - .:/app/
+
