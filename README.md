@@ -1,33 +1,36 @@
-# Getting Started with the Every.io engineering challenge.
+# Task application
 
-Thanks for taking the time to complete the Every.io code challenge. Don't worry, it's not too hard, and please do not spend more than an hour or two. We know you have lots of these to do, and it can be very time consuming.
+## Running the app
 
-## The biggest factor will be your code:
+### Start app in dev mode (inside Docker container)
 
-1. How readable, is your code.
-2. Scalability.
-3. Are there any bugs.
+Before starting, remember to have docker up and running in your machine
 
-## Requirements
+1. Enter image console: `make shell`
+2. Start app in debug mode: `npm run dev`
+3. Check the app running at `localhost:3000` :tada:
+4. You can test using Postman
+5. First it is necessary to login using this endpoint `http://localhost:3000/login`. JSON body example `{"name": "Barry Peterson", "password": "barrypeterson"}`
+6. There are other users with different roles in the file `src/infrastructure/repositories/mocks/login-data.ts`
+7. After login you can call controller `src/application/controllers/task.controller.ts` endpoints. Need to add `x-access-token` header with token returned in login call
+8. GET endpoint `http://localhost:3000/tasks` to get all tasks
+9. POST endpoint `http://localhost:3000/tasks` to create a new task. Need JSON body
+10. PUT endpoint `http://localhost:3000/tasks/{taskId}` to update a task. Need JSON body
 
-You will be creating an API for a task application.
+## Testing
 
-1. This application will have tasks with four different states:
-   - To do
-   - In Progress
-   - Done
-   - Archived
-2. Each task should contain: Title, Description, and what the current status is.
-3. A task can be archived and moved between columns, or statuses.
-4. The endpoint for tasks should only display tasks for those users who have authenticated and are authorized to view their tasks.
+Unit tests and integration test
 
-## Ideal
+Just run the command below:
 
-- Typescript
-- Tests
-- Dockerized Application
+```bash
+npm run test
+```
 
-## Extra credit
+## Considerations
 
-- Apollo Server GraphQL
-- Logging
+1. Mock data was used to simplify so no database was created
+2. Authentication and authorization are only covered by integration test
+3. Reading and writing roles were considered
+4. UseGuards was used for authentication and authorization
+5. Logging was not considered due to the exercise submission deadline
